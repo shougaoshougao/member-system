@@ -1,0 +1,48 @@
+########################################################### 全局配置
+
+spring:
+  jpa:
+    properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  data.web.pageable.one-indexed-parameters: true # 分页从1开始
+logging:
+  level:
+    com.renaissance.core.web.filter.LoggingFilter: DEBUG
+---
+
+########################################################### 开发环境
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/member_dev?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&useTimezone=true&serverTimezone=GMT%2B8
+    username: root
+    password: root
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+project:
+  http.authentication.mock: false
+  token.expire: 720
+
+---
+
+########################################################### 生产环境
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/member_prod?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&useTimezone=true&serverTimezone=GMT%2B8
+    username: member_user
+    password: 123456
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+logging:
+  file: /mnt/logs/member-system-prod/member-system.log
+project:
+  token.expire: 720
+server:
+  port: 8080
+springfox.documentation.swagger.host: www.bmaster.cn
+
